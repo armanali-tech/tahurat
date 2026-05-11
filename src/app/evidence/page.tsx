@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
+
+const BASE = "/tahurat";
 
 const artefacts = [
   {
@@ -380,12 +381,11 @@ export default function EvidencePage() {
                         onClick={() => setLightbox(src)}
                         className="relative aspect-[4/3] rounded-lg overflow-hidden border border-white/10 hover:border-indigo-500/50 transition-colors cursor-pointer group"
                       >
-                        <Image
-                          src={src}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`${BASE}${src}`}
                           alt=""
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          sizes="(max-width: 640px) 50vw, 33vw"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                           <svg
@@ -459,12 +459,11 @@ export default function EvidencePage() {
             className="relative max-w-4xl max-h-[85vh] w-full h-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
-              src={lightbox}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${BASE}${lightbox}`}
               alt=""
-              fill
-              className="object-contain"
-              sizes="100vw"
+              className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
         </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+
+const BASE = "/tahurat";
 
 export default function InquiryPage() {
   const [lightbox, setLightbox] = useState(false);
@@ -34,12 +35,11 @@ export default function InquiryPage() {
           onClick={() => setLightbox(true)}
           className="relative w-full aspect-[16/10] rounded-lg overflow-hidden border border-white/10 hover:border-indigo-500/50 transition-colors cursor-pointer group"
         >
-          <Image
-            src="/image/inquiry-focus - concept-map.png"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`${BASE}/image/inquiry-focus - concept-map.png`}
             alt="Inquiry Focus Concept Map"
-            fill
-            className="object-contain group-hover:scale-[1.02] transition-transform duration-300"
-            sizes="(max-width: 1120px) 100vw, 1120px"
+            className="absolute inset-0 w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
             <svg
@@ -127,12 +127,11 @@ export default function InquiryPage() {
             className="relative max-w-5xl max-h-[85vh] w-full h-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
-              src="/image/inquiry-focus - concept-map.png"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${BASE}/image/inquiry-focus - concept-map.png`}
               alt="Inquiry Focus Concept Map"
-              fill
-              className="object-contain"
-              sizes="100vw"
+              className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
         </div>
