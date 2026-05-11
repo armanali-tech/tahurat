@@ -1,0 +1,231 @@
+Deploy Static Portfolio Website on GitHub Pages
+
+1. Create GitHub Repository
+
+Go to: GitHub￼
+
+* Click New Repository
+* Repository name example: portfolio
+* Set visibility: Public
+* Create repository
+
+⸻
+
+2. Push Your Project Code
+
+Initialize Git
+
+git init
+git add .
+git commit -m "Initial portfolio commit"
+
+Connect GitHub Repo
+
+Replace YOUR_USERNAME and REPO_NAME.
+
+git remote add origin https://github.com/armanali-tech/tahurat.git
+git branch -M main
+git push -u origin main
+
+⸻
+
+⸻
+
+Option B — Next.js Static Portfolio (Recommended for your stack)
+
+Since you use Next.js, deploy using static export.
+
+⸻
+
+1. Update next.config.js
+
+Next.js 14/15 Static Export
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
+module.exports = nextConfig;
+
+⸻
+
+2. Add Build Script
+
+In package.json:
+
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build"
+  }
+}
+
+After build, Next.js generates:
+
+/out
+
+⸻
+
+3. Install gh-pages
+
+npm install gh-pages --save-dev
+
+⸻
+
+4. Update package.json
+
+{
+  "homepage": "https://YOUR_USERNAME.github.io/REPO_NAME",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "deploy": "gh-pages -d out"
+  }
+}
+
+⸻
+
+5. Deploy
+
+npm run build
+npm run deploy
+
+This creates a gh-pages branch automatically.
+
+⸻
+
+6. Configure GitHub Pages
+
+Go to:
+
+Settings → Pages
+
+Select:
+
+* Branch → gh-pages
+* Folder → /root
+
+Save.
+
+⸻
+
+Custom Domain (Optional)
+
+If you own a domain:
+
+Example:
+
+armanali.dev
+
+Add in GitHub Pages settings:
+
+* Custom domain
+
+Then configure DNS:
+
+Type	Host	Value
+CNAME	www	YOUR_USERNAME.github.io
+
+⸻
+
+GitHub Actions Auto Deployment (Recommended)
+
+Create:
+
+.github/workflows/deploy.yml
+
+Example:
+
+name: Deploy Portfolio
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Export
+        run: npx next export
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+
+Now every push to main auto deploys.
+
+⸻
+
+Common Issues
+
+Blank Page
+
+Usually caused by incorrect base path.
+
+Fix:
+
+const nextConfig = {
+  output: 'export',
+  basePath: '/REPO_NAME',
+  assetPrefix: '/REPO_NAME/',
+};
+
+⸻
+
+Images Not Loading
+
+Use:
+
+images: {
+  unoptimized: true,
+}
+
+⸻
+
+404 on Refresh
+
+GitHub Pages supports only static routes.
+
+Avoid:
+
+* Dynamic SSR routes
+* API routes
+* Middleware
+
+Use static pages only.
+
+⸻
+
+Recommended Stack for Portfolio
+
+For your profile:
+
+* Next.js
+* TailwindCSS
+* Framer Motion
+* GitHub Pages
+* GitHub Actions CI/CD
+
+This gives:
+
+* Free hosting
+* SSL
+* CDN
+* Auto deployment
+* Fast performance
